@@ -7,8 +7,6 @@ const validateUser = async (emailInput: string, passwordInput: string) => {
     where: { email: emailInput },
   });
 
-  console.log('user: ', user);
-
   if (!user) return { status: 401, payload: 'Incorrect email or password' };
 
   const passwordCheck = await bcrypt.compare(passwordInput, user.dataValues.password);
@@ -19,6 +17,8 @@ const validateUser = async (emailInput: string, passwordInput: string) => {
 
   console.log('userWithoutPassword: ', userWithoutPassword);
   const token = jwtFunctions.createToken(userWithoutPassword);
+
+  console.log('TOKEN: ', token);
 
   return { status: 200, payload: token };
 };

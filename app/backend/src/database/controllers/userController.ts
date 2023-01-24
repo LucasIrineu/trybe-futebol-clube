@@ -12,6 +12,14 @@ const login = async (req: Request, res: Response) => {
   if (status === 200) return res.status(status).json({ token: payload });
 };
 
+const validateUser = async (req: Request, res: Response) => {
+  const { userInfo } = req.body;
+  const { role } = userInfo;
+
+  return res.status(200).json({ role });
+};
+
 export default {
   login,
+  validateUser,
 };
