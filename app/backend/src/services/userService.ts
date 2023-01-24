@@ -13,7 +13,7 @@ const validateUser = async (emailInput: string, passwordInput: string) => {
 
   const passwordCheck = await bcrypt.compare(passwordInput, user.dataValues.password);
 
-  if (!passwordCheck) return { status: 401, payload: 'Incorrect email or password' };
+  if (passwordCheck === false) return { status: 401, payload: 'Incorrect email or password' };
 
   const { password: _, ...userWithoutPassword } = user.dataValues;
 
