@@ -15,10 +15,7 @@ const validateUser = async (emailInput: string, passwordInput: string) => {
 
   const { password: _, ...userWithoutPassword } = user.dataValues;
 
-  console.log('userWithoutPassword: ', userWithoutPassword);
   const token = jwtFunctions.createToken(userWithoutPassword);
-
-  console.log('TOKEN: ', token);
 
   return { status: 200, payload: token };
 };

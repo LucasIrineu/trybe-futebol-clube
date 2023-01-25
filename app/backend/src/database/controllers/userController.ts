@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import userService from '../../services/userService';
 
 const login = async (req: Request, res: Response) => {
-  console.log('email: ', req.body.email, 'password: ', req.body.password);
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ message: 'All fields must be filled' });
 
