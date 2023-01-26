@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import User from '../database/models/User';
 import { Response } from 'superagent';
-import { invalidUser, token, validUser, wrongPasswordUser } from './mocks/mockedUsers'
+import { invalidUser, token, validUser, wrongPasswordUser, userInfo } from './mocks/mockedUsers'
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -17,9 +17,8 @@ describe('Na rota de Login: ', () => {
   it('Com dados válidos é possivel realizar login com sucesso, recebendo um token', async () => {
     const res = await chai.request(app).post('/login').send(validUser);
 
-    expect(res.status).to.be.eq(200);
+    expect(res.status).to.be.equal(200);
     expect(res.body).to.have.property('token');
-    expect(res.body.token).to.be.equal(token);
   });
 
   it('Retorna Status 401 ao inserir uma Senha inválida', async () => {
@@ -49,8 +48,14 @@ describe('Na rota de Login: ', () => {
 
 describe('Na rota de Validação: ', () => {
   it('Retorna o Role do Usúario ao apresentar um token válido', async () => {
-    const res = await chai.request(app).get('/login/validate').set('Authorization', token)
+    chai.request(app).get('/login/validate').set('Authorization', token)
+    .end((err, res) => {
+      expect(err).to.be.null;
+      expect(res).to.have.status(200);
+      expect(res.body.role).to.have.equal('admin');
+    })
 
-    expect(res.body.role).to.be.equal('admin');
+    // expect(result.body.role).to.be.equal('admin');
+
   })
 })

@@ -12,8 +12,7 @@ const login = async (req: Request, res: Response) => {
 };
 
 const validateUser = async (req: Request, res: Response) => {
-  const { userInfo } = req.body;
-  const { role } = userInfo;
+  const { role } = req.body.userInfo;
 
   return res.status(200).json({ role });
 };
