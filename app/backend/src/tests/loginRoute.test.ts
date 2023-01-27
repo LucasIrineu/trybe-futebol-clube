@@ -3,9 +3,7 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { app } from '../app';
-import User from '../database/models/User';
-import { Response } from 'superagent';
-import { invalidUser, token, validUser, wrongPasswordUser, userInfo } from './mocks/mockedUsers'
+import { invalidUser, validUser, wrongPasswordUser } from './mocks/mockedUsers'
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -48,7 +46,9 @@ describe('Na rota de Login: ', () => {
 
 describe('Na rota de Validação: ', () => {
   it('Retorna o Role do Usúario ao apresentar um token válido', async () => {
-    chai.request(app).get('/login/validate').set('Authorization', token)
+    const login = await chai.request(app).post('/login').send(validUser);
+
+    chai.request(app).get('/login/validate').set('Authorization', login.body.token)
     .end((err, res) => {
       expect(err).to.be.null;
       expect(res).to.have.status(200);
