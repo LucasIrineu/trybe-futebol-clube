@@ -11,7 +11,7 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      homeTeam: {
+      homeTeamId: {
         type: Sequelize.INTEGER,
         field: 'home_team_id',
         allowNull: false,
@@ -22,7 +22,7 @@ module.exports = {
         field: 'home_team_goals',
         allowNull: false,
       },
-      awayTeam: {
+      awayTeamId: {
         type: Sequelize.INTEGER,
         field: 'away_team_id',
         allowNull: false,

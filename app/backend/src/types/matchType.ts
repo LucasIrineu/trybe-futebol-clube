@@ -2,9 +2,9 @@ import TTeam from './teamType';
 
 type TMatch = {
   id: number,
-  homeTeam: number,
+  homeTeamId: number,
   homeTeamGoals: number,
-  awayTeam: number,
+  awayTeamId: number,
   awayTeamGoals: number,
   inProgress:boolean,
 };
@@ -18,7 +18,15 @@ type TSortedMatch = {
   inProgress: boolean,
 };
 
+type TNewMatch = {
+  homeTeamId: number,
+  awayTeamId: number,
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+};
+
 export {
   TMatch,
   TSortedMatch,
+  TNewMatch,
 };

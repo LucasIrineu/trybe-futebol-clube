@@ -15,6 +15,24 @@ const getAllMatches = async (req: Request, res: Response) => {
   return res.status(200).json(allMatches);
 };
 
+const addNewMatch = async (req: Request, res: Response) => {
+  const { body } = req;
+
+  const addedMatch = await matchService.addNewMatch(body);
+
+  return res.status(201).json(addedMatch);
+};
+
+const finishMatch = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const { message } = await matchService.finishMatch(id);
+
+  return res.status(200).json({ message });
+};
+
 export default {
   getAllMatches,
+  addNewMatch,
+  finishMatch,
 };

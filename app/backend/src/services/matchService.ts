@@ -1,12 +1,12 @@
-import { TMatch, TSortedMatch } from '../types/matchType';
+import { TMatch, TNewMatch, TSortedMatch } from '../types/matchType';
 import Match from '../database/models/Matches';
 import teamService from './teamService';
 
 const sortTeamsByName = async (matchesArray: TMatch[]): Promise<TSortedMatch[]> => {
   const resultArray: TSortedMatch[] = await Promise.all(matchesArray.map(async (match) => {
     const { id, homeTeamGoals, awayTeamGoals, inProgress } = match;
-    const homeTeam = await teamService.getTeamById(match.homeTeam.toString());
-    const awayTeam = await teamService.getTeamById(match.awayTeam.toString());
+    const homeTeam = await teamService.getTeamById(match.homeTeamId.toString());
+    const awayTeam = await teamService.getTeamById(match.awayTeamId.toString());
 
     return {
       id,
@@ -47,7 +47,24 @@ const getMatchesWithFilter = async (inProgress: string) => {
   }
 };
 
+const addNewMatch = async (newMatch: TNewMatch) => {
+  const addedMatch = await Match.create({
+    ...newMatch,
+    inProgress: true,
+  });
+
+  return addedMatch.dataValues;
+};
+
+const finishMatch = async (id: string) => {
+  await Match.update({ inProgress: false }, { where: { id: Number(id) } });
+
+  return { message: 'Finished' };
+};
+
 export default {
   getAllMatches,
   getMatchesWithFilter,
+  addNewMatch,
+  finishMatch,
 };
