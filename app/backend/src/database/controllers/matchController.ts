@@ -31,8 +31,18 @@ const finishMatch = async (req: Request, res: Response) => {
   return res.status(200).json({ message });
 };
 
+const updateMatch = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { homeTeamGoals, awayTeamGoals } = req.body;
+
+  await matchService.updateMatch(homeTeamGoals, awayTeamGoals, Number(id));
+
+  res.status(200).json({ message: 'Update Sucessful' });
+};
+
 export default {
   getAllMatches,
   addNewMatch,
   finishMatch,
+  updateMatch,
 };

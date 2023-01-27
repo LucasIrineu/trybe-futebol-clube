@@ -62,9 +62,17 @@ const finishMatch = async (id: string) => {
   return { message: 'Finished' };
 };
 
+const updateMatch = async (homeTeamGoals: number, awayTeamGoals: number, id: number) => {
+  await Match.update(
+    { homeTeamGoals, awayTeamGoals },
+    { where: { id } },
+  );
+};
+
 export default {
   getAllMatches,
   getMatchesWithFilter,
   addNewMatch,
   finishMatch,
+  updateMatch,
 };
