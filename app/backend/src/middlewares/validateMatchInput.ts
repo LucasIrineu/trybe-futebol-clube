@@ -11,18 +11,18 @@ const validateMatchInput = async (req: Request, res: Response, next: NextFunctio
   const { body } = req;
   const { homeTeamId, awayTeamId } = body;
 
-  if (homeTeamId === awayTeamId) {
-    return res.status(422).json(
-      { message: 'It is not possible to create a match with two equal teams' },
-    );
-  }
-
   const checkHomeTeam = await checkIfTeamExists(homeTeamId);
   const checkAwayTeam = await checkIfTeamExists(awayTeamId);
 
   if (!checkHomeTeam || !checkAwayTeam) {
     return res.status(404).json(
       { message: 'There is no team with such id!' },
+    );
+  }
+
+  if (homeTeamId === awayTeamId) {
+    return res.status(422).json(
+      { message: 'It is not possible to create a match with two equal teams' },
     );
   }
 
