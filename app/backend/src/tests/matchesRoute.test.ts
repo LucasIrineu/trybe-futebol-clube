@@ -30,7 +30,7 @@ describe('Na rota "/matches": ', () => {
     expect(result.body[0].inProgress).to.be.equal(false);
   })
 
-  it('É possivel o status "inProgress" de uma partida em andamento para false', async () => {
+  it('É possivel alterar o status "inProgress" de uma partida em andamento para false', async () => {
     const result = await chai.request(app).patch('/matches/:id/finish');
     
     expect(result.status).to.be.equal(200);
@@ -50,7 +50,8 @@ describe('Na rota "/matches": ', () => {
   })
 
   it('Não é possivel adicionar uma partida sem um Token válido', async () => {
-    const result = await chai.request(app)
+    const result = await chai
+    .request(app)
     .post('/matches')
     .set('Authorization', 'xxxtokenFalsinhoxxx')
     .send(validMatchInput);
